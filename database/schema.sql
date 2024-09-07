@@ -1,0 +1,1 @@
+--TODO: wirte the schema for the database by creating the tables and the relationships between them
