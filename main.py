@@ -118,7 +118,6 @@ def handle_user_menu(meal_service, bill_service, order_service):
 
 def main():
     db_conn = get_db_connection()
-
     global auth_service
     auth_service = AuthenticationService(db_conn)
     user_service = UserService(db_conn)
@@ -146,10 +145,10 @@ def main():
             elif choice == 2:
                 first_name = input("First Name: ")
                 last_name = input("Last Name: ")
-                username = input("Username: ")
+                user_name = input("Username: ")
                 password = input("Password: ")
                 age = int(input("Age: "))
-                print(auth_service.signup(first_name, last_name, age, username, password))
+                print(auth_service.signup(first_name, last_name, age, user_name, password))
             elif choice == 3:
                 print("Exiting...")
                 break

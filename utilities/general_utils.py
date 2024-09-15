@@ -1,7 +1,5 @@
 import uuid
 import bcrypt
-
-
 def generate_id():
     return str(uuid.uuid4())
 

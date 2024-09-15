@@ -1,6 +1,4 @@
 from utilities.general_utils import generate_id
-
-
 class User:
     def __init__(
         self, first_name, last_name, age, username, password, role, id=generate_id()) -> None:
