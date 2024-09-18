@@ -34,21 +34,6 @@ class UserService(BaseService):
             result = fetch_data(query, (user_name,))
             return result[0] if result else None
     
-    # def add(self, user: dict):
-    #     query = """
-    #     INSERT INTO users (user_id, first_name, last_name,age, user_name, password,role,is_loggedin)
-    #     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    #     """
-    #     user_id = str(uuid4())
-    #     hashed_password = hash_password(user['password'])
-    #     user_data = (
-    #     user_id, user.first_name, user.last_name, user.age, user.username,
-    #     hashed_password, user.role, user.is_loggedin
-    #     )
-    #     execute_query(query, user_data)
-    #     print (f"User {user.username} added successfully."),
-    #     return f"User {user.username} added successfully."
-    
     def add(self, user: dict):
         query = """
         INSERT INTO users (user_id, first_name, last_name, age, user_name, password, role, is_loggedin)
