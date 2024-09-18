@@ -1,5 +1,10 @@
 from database.db_connection import get_db_connection
 import sqlite3
+# from ..database.db_connection import get_db_connection
+# import sys
+# import os
+# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 def execute_query(query: str, params: tuple = ()):

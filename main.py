@@ -26,12 +26,13 @@ def handle_admin_menu(auth_service, user_service, meal_service, bill_service, or
     if choice == 1:
         print(user_service.list_all())
     elif choice == 2:
-        username = input("Username: ")
+        user_name = input("Username: ")
         password = input("Password: ")
         age = int(input("Age: "))
         first_name = input("First Name: ")
         last_name = input("Last Name: ")
-        user = User(username=username, password=password, age=age, first_name=first_name, last_name=last_name)
+        role=input("choice one :(admin-user-cashier)")
+        user = User(username=user_name, password=password, age=age, first_name=first_name, last_name=last_name,role=role)
         user_service.add(user)
     elif choice == 3:
         user_id = input("User ID to remove: ")
@@ -39,7 +40,7 @@ def handle_admin_menu(auth_service, user_service, meal_service, bill_service, or
     elif choice == 4:
         user_id = input("User ID to update: ")
         updated_info = {
-            "username": input("New Username: "),
+            "user_name": input("New Username: "),
             "age": int(input("New Age: ")),
             "first_name": input("New First Name: "),
             "last_name": input("New Last Name: "),
@@ -59,7 +60,7 @@ def handle_admin_menu(auth_service, user_service, meal_service, bill_service, or
     elif choice == 8:
         meal_id = input("Meal ID to update: ")
         updated_info = {
-            "name": input("New Meal Name: "),
+            "name_meal": input("New Meal Name: "),
             "price": float(input("New Price: "))
         }
         meal_service.update(meal_id, updated_info)
@@ -68,7 +69,7 @@ def handle_admin_menu(auth_service, user_service, meal_service, bill_service, or
     elif choice == 10:
         print(order_service.list_all())
     elif choice == 11:
-        return auth_service.signout(auth_service.current_user['id'])
+        return auth_service.signout(auth_service.current_user['user_id'])
     else:
         print("Invalid choice")
 
@@ -79,10 +80,13 @@ def handle_cashier_menu(bill_service):
     if choice == 1:
         print(bill_service.list_all())
     elif choice == 2:
+        updated_info = {
+                "is_paid": 1,
+            }
         bill_id = input("Bill ID to mark as paid: ")
-        bill_service.update(bill_id)
+        bill_service.update(bill_id,updated_info)
     elif choice == 3:
-        return auth_service.signout(auth_service.current_user['id'])
+        return auth_service.signout(auth_service.current_user['user_id'])
     else:
         print("Invalid choice")
 
@@ -93,7 +97,7 @@ def handle_user_menu(meal_service, bill_service, order_service):
     if choice == 1:
         print(meal_service.list_all())
     elif choice == 2:
-        user_id = auth_service.current_user['id']
+        user_id = auth_service.current_user['user_id']
         bill_id = generate_id()
         orders = []
         while True:
@@ -105,14 +109,14 @@ def handle_user_menu(meal_service, bill_service, order_service):
                 print("Meal not found")
                 continue
             quantity = int(input("Quantity: "))
-            order = Order(bill_id, meal_id, quantity, meal.price)
+            order = Order(bill_id, meal_id, quantity,  meal['price'])
             orders.append(order)
-        bill = Bill(user_id, sum(order.total_price * quantity for order in orders), bill_id)
+        bill = Bill(user_id, sum(order.price * quantity for order in orders), bill_id,)
         bill_service.add(bill)
         for order in orders:
             order_service.add(order)       
     elif choice == 3:
-        return auth_service.signout(auth_service.current_user['id'])
+        return auth_service.signout(auth_service.current_user['user_id'])
     else:
         print("Invalid choice")
 
@@ -148,7 +152,7 @@ def main():
                 user_name = input("Username: ")
                 password = input("Password: ")
                 age = int(input("Age: "))
-                print(auth_service.signup(first_name, last_name, age, user_name, password))
+                print(auth_service.signup(first_name, last_name, age,user_name, password))
             elif choice == 3:
                 print("Exiting...")
                 break
